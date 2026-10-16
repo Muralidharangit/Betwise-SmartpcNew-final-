@@ -10,15 +10,16 @@
 }
 
 body {
-  background-color: var(--bg-deep);
+  background-color: #062b47;
   background-image:
-    radial-gradient(circle at 50% 0%, rgba(94, 23, 187, 0.35) 0%, transparent 60%),
-    radial-gradient(circle at 100% 100%, rgba(76, 12, 148, 0.25) 0%, transparent 50%),
-    radial-gradient(circle at 0% 100%, rgba(38, 8, 82, 0.35) 0%, transparent 40%),
-    linear-gradient(180deg, #070214 0%, #04010b 100%);
+    linear-gradient(180deg, rgba(6, 43, 72, 0.78) 0%, rgba(4, 25, 42, 0.92) 100%),
+    url('/assets/images/bg-1.png');
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
   background-attachment: fixed;
   color: #ffffff;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   min-height: 100vh;
   margin: 0;
   padding: 0;
@@ -28,10 +29,9 @@ body {
 /* Scoped Gaming Atmosphere Background for Game Page Only */
 body.game-lobby-body,
 .game-lobby-body {
-  background-color: #060212 !important;
+  background-color: #062b47 !important;
   background-image:
-    linear-gradient(180deg, rgba(6, 2, 18, 0.72) 0%, rgba(10, 3, 26, 0.82) 40%, rgba(4, 1, 11, 0.92) 100%),
-    radial-gradient(circle at 50% 10%, rgba(115, 27, 240, 0.3) 0%, transparent 65%),
+    linear-gradient(180deg, rgba(6, 43, 72, 0.74) 0%, rgba(5, 33, 56, 0.82) 45%, rgba(4, 25, 42, 0.92) 100%),
     url('/assets/images/bg-1.png') !important;
   background-repeat: no-repeat !important;
   background-position: center top !important;
@@ -51,12 +51,12 @@ body.game-lobby-body,
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #4d1d8f;
+  background: #064e3b;
   border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #7a2bd6;
+  background: #064e3b;
 }
 
 /* ==========================================================================
@@ -137,37 +137,44 @@ body.game-lobby-body,
 
 .brand-name,
 .brand-logo-text {
-  font-family: 'Rajdhani', sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-weight: 800;
-  font-size: 1.65rem;
-  letter-spacing: 1.5px;
-  color: var(--gold-accent);
-  text-shadow: 0 0 12px rgba(245, 179, 0, 0.45);
+  font-size: 1.7rem;
+  letter-spacing: -0.5px;
   margin: 0;
   line-height: 1;
+  display: inline-flex;
+  align-items: center;
+}
+
+.brand-name .brand-bet,
+.brand-name span:first-child {
+  color: #00A3FF !important;
+  font-weight: 800 !important;
+  text-shadow: 0 0 10px rgba(0, 163, 255, 0.35);
+}
+
+.brand-name .brand-wise,
+.brand-name span:last-child {
+  color: #35E52D !important;
+  font-weight: 800 !important;
+  text-shadow: 0 0 10px rgba(53, 229, 45, 0.45);
 }
 
 /* Station Badge */
 .station-badge {
-  background: linear-gradient(90deg, #240b54, #150630);
-  border: 1px solid var(--card-border);
-  clip-path: polygon(8px 0%,
-      calc(100% - 8px) 0%,
-      100% 8px,
-      100% calc(100% - 8px),
-      calc(100% - 8px) 100%,
-      8px 100%,
-      0% calc(100% - 8px),
-      0% 8px);
-  border-radius: 0;
-  padding: 5px 14px;
+  background: #042742;
+  border: 1px solid #0B4A70;
+  clip-path: none;
+  border-radius: 9999px;
+  padding: 4px 14px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  color: #e5d8ff;
-  box-shadow: 0 0 10px var(--card-inner-glow);
+  color: #D8E2EC;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
 }
 
 .online-dot {
@@ -194,41 +201,32 @@ body.game-lobby-body,
 
 /* Balance Display Chip */
 .balance-chip {
-  background: linear-gradient(135deg, rgba(31, 11, 72, 0.95), rgba(16, 5, 38, 0.95));
-  border: 1.5px solid var(--card-border);
-  clip-path: polygon(10px 0%,
-      calc(100% - 10px) 0%,
-      100% 10px,
-      100% calc(100% - 10px),
-      calc(100% - 10px) 100%,
-      10px 100%,
-      0% calc(100% - 10px),
-      0% 10px);
-  border-radius: 0;
-  padding: 6px 18px;
+  background: #042742;
+  border: 1px solid #0B4A70;
+  clip-path: none;
+  border-radius: 9999px;
+  padding: 4px 16px;
   display: flex;
   align-items: center;
-  gap: 14px;
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15), 0 0 15px var(--card-inner-glow);
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+  gap: 12px;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
 }
 
 .balance-chip .label {
-  font-size: 0.7rem;
-  color: var(--text-muted-purple);
+  font-size: 0.65rem;
+  color: #8CAEC7;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.5px;
   display: block;
 }
 
 .balance-chip .val {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 1.3rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 1.15rem;
   font-weight: 800;
-  color: var(--gold-accent);
-  text-shadow: 0 0 10px rgba(245, 179, 0, 0.5);
-  line-height: 1;
+  color: #35E52D;
+  text-shadow: 0 0 10px rgba(53, 229, 45, 0.45);
 }
 
 /* ==========================================================================
@@ -236,10 +234,10 @@ body.game-lobby-body,
    ========================================================================== */
 .winbet-card,
 .winbet-card-frame {
-  background: var(--card-bg-gradient);
-  border: 1.5px solid var(--card-border);
+  background: linear-gradient(180deg, rgba(7, 63, 104, 0.92) 0%, rgba(6, 43, 72, 0.95) 100%);
+  border: 1.5px solid #0B4A70;
   border-radius: var(--card-radius);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 25px rgba(89, 21, 179, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 25px rgba(11, 74, 112, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.12);
   padding: 24px 20px;
   min-height: 480px;
   display: flex;
@@ -247,30 +245,31 @@ body.game-lobby-body,
   justify-content: space-between;
   position: relative;
   transition: all 0.3s ease;
+  backdrop-filter: blur(12px);
 }
 
 .winbet-card:hover,
 .winbet-card-frame:hover {
-  border-color: #8b3dff;
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.8), 0 0 35px rgba(139, 61, 255, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.25);
+  border-color: #35E52D;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.8), 0 0 35px rgba(53, 229, 45, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.25);
   transform: translateY(-2px);
 }
 
 .winbet-card.active-step-card {
-  border-color: #a855f7;
-  box-shadow: 0 0 40px rgba(168, 85, 247, 0.6), inset 0 0 15px rgba(168, 85, 247, 0.2);
+  border-color: #0B4A70;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 35px rgba(53, 229, 45, 0.35), inset 0 0 15px rgba(11, 74, 112, 0.3);
 }
 
 .badge-step {
   display: inline-block;
-  background: rgba(147, 51, 234, 0.25);
-  border: 1px solid #9333ea;
-  color: #d8b4fe;
+  background: rgba(0, 157, 80, 0.2);
+  border: 1px solid #35E52D;
+  color: #42F52B;
   border-radius: 20px;
   padding: 2px 10px;
   font-size: 0.72rem;
   margin-bottom: 8px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .step-pill-box {
@@ -284,16 +283,16 @@ body.game-lobby-body,
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #8b3dff 0%, #4908a8 100%);
-  border: 1.5px solid #a855f7;
+  background: linear-gradient(180deg, #00B84F 0%, #008A3D 100%);
+  border: 1.5px solid #35E52D;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Rajdhani', sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-weight: 800;
   font-size: 1.15rem;
   color: #ffffff;
-  box-shadow: 0 0 12px rgba(139, 61, 255, 0.65), inset 0 1px 1px #fff;
+  box-shadow: 0 0 12px rgba(53, 229, 45, 0.5), inset 0 1px 1px #fff;
   flex-shrink: 0;
 }
 
@@ -339,10 +338,10 @@ select,
 }
 
 .winbet-input:focus {
-  background-color: #0b041c;
-  border-color: #8b3dff;
+  background-color: #042742;
+  border-color: #35E52D;
   color: #ffffff;
-  box-shadow: 0 0 15px rgba(139, 61, 255, 0.4), inset 0 2px 5px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 15px rgba(53, 229, 45, 0.4), inset 0 2px 5px rgba(0, 0, 0, 0.6);
 }
 
 /* Option Item Rows (Machine Selector) */
@@ -690,63 +689,58 @@ select,
 }
 
 .btn-gold-action {
-  background: var(--gold-gradient);
-  border: none;
-  color: #1a0800;
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 800;
-  font-size: 0.96rem;
-  letter-spacing: 0.5px;
-  padding: 9px 22px;
-  clip-path: polygon(8px 0%,
-      calc(100% - 8px) 0%,
-      100% 8px,
-      100% calc(100% - 8px),
-      calc(100% - 8px) 100%,
-      8px 100%,
-      0% calc(100% - 8px),
-      0% 8px);
-  border-radius: 0;
-  box-shadow: 0 4px 18px var(--gold-glow), inset 0 1px 1px #fff;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.5));
+  background: linear-gradient(180deg, #00B84F 0%, #008A3D 100%) !important;
+  border: 1.5px solid #35E52D !important;
+  color: #ffffff !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 0.82rem !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  padding: 7px 20px !important;
+  clip-path: none !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 4px 12px rgba(0, 100, 45, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  filter: none !important;
 }
 
 .btn-gold-action:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 6px 24px rgba(245, 179, 0, 0.85);
-  filter: drop-shadow(0 4px 14px rgba(245, 158, 11, 0.7));
-  color: #1a0800;
+  background: linear-gradient(180deg, #10d365 0%, #009d50 100%) !important;
+  border-color: #42F52B !important;
+  color: #ffffff !important;
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 0 18px rgba(66, 245, 43, 0.65), inset 0 1px 1px #ffffff !important;
 }
 
 .btn-icon-control {
-  background: #180836;
-  border: 1px solid var(--card-border);
-  color: #cfbdf5;
-  width: 38px;
-  height: 38px;
-  clip-path: polygon(6px 0%,
-      calc(100% - 6px) 0%,
-      100% 6px,
-      100% calc(100% - 6px),
-      calc(100% - 6px) 100%,
-      6px 100%,
-      0% calc(100% - 6px),
-      0% 6px);
-  border-radius: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-decoration: none;
+  background: #042742 !important;
+  border: 1px solid #0B4A70 !important;
+  color: #D8E2EC !important;
+  width: 36px !important;
+  height: 36px !important;
+  clip-path: none !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  text-decoration: none !important;
+}
+
+.btn-icon-control:hover {
+  border-color: #35E52D !important;
+  color: #35E52D !important;
+  background: #073F68 !important;
+  box-shadow: 0 0 10px rgba(53, 229, 45, 0.4) !important;
 }
 
 .btn-icon-control:hover {
@@ -798,15 +792,14 @@ select,
 
 /* Bottom Terminal / Smart PC Dock */
 .smart-pc-dock {
-  background: rgba(10, 4, 25, 0.98);
-  backdrop-filter: blur(12px);
-  border-top: 1.5px solid var(--card-border);
-  box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.6);
-  padding: 12px 24px;
-  margin-top: auto;
+  background: #06385D;
+  border-top: 1px solid #0B4A70;
+  box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.45);
+  padding: 10px 24px;
   position: sticky;
   bottom: 0;
   z-index: 1000;
+  width: 100%;
 }
 
 .brand-security-seal {
@@ -1182,27 +1175,49 @@ select,
 .smartpc-hero-frame {
   position: relative;
   width: 100%;
-  border-radius: 20px;
-  background: linear-gradient(135deg, rgba(245, 179, 0, 0.45) 0%, rgba(168, 85, 247, 0.5) 50%, rgba(245, 179, 0, 0.3) 100%);
-  padding: 2px;
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(168, 85, 247, 0.25);
+  aspect-ratio: 5 / 1;
+  border-radius: 14px;
+  background: #0B4A70;
+  padding: 1.5px;
+  box-shadow: 0 8px 30px rgba(4, 39, 66, 0.6), 0 0 20px rgba(11, 74, 112, 0.35);
   overflow: hidden;
 }
 
 .smartpc-hero-swiper {
-  border-radius: 18px;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 5 / 1;
+  border-radius: 13px;
   overflow: hidden;
-  background: #0d0322;
+  background: #042742;
 }
 
 .smartpc-slide {
   position: relative;
-  /* min-height: 275px; */
-  min-height: 300px;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 5 / 1;
   display: flex;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
-  border-radius: 18px;
+  border-radius: 13px;
+  cursor: pointer;
+}
+
+.smartpc-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+  transition: transform 0.4s ease;
+}
+
+.smartpc-slide:hover .smartpc-banner-img {
+  transform: scale(1.008);
 }
 
 /* Rich, Smooth Slide Variant Backgrounds */
@@ -1835,7 +1850,7 @@ select,
   }
 
   .smartpc-slide {
-    min-height: 280px;
+    min-height: unset;
   }
 
   .hero-jackpot-title {
@@ -2394,18 +2409,18 @@ select,
    CATEGORY BAR & SEARCH HUD SYSTEM
    ========================================================================== */
 .category-nav-bar {
-  background: linear-gradient(90deg, rgba(14, 5, 36, 0.88) 0%, rgba(26, 8, 62, 0.94) 50%, rgba(14, 5, 36, 0.88) 100%);
-  border: 1.5px solid rgba(120, 31, 245, 0.45);
-  border-radius: 14px;
-  padding: 8px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
   margin-bottom: 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 14px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(12px);
+  box-shadow: none;
+  backdrop-filter: none;
   position: relative;
 }
 
@@ -2425,30 +2440,24 @@ select,
 
 .cat-pill {
   position: relative;
-  background: linear-gradient(180deg, #14072f 0%, #0c031d 100%);
-  clip-path: polygon(7px 0%,
-      calc(100% - 7px) 0%,
-      100% 7px,
-      100% calc(100% - 7px),
-      calc(100% - 7px) 100%,
-      7px 100%,
-      0% calc(100% - 7px),
-      0% 7px);
-  border: 1px solid rgba(168, 85, 247, 0.45);
-  padding: 8px 15px;
+  background: #042742;
+  clip-path: none;
+  border-radius: 8px;
+  border: 1px solid #0B4A70;
+  padding: 7px 16px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #ede9fe;
-  font-family: 'Rajdhani', 'Orbitron', sans-serif;
+  color: #D8E2EC;
+  font-family: 'Inter', system-ui, sans-serif;
   font-weight: 700;
-  font-size: 0.88rem;
-  letter-spacing: 0.8px;
+  font-size: 0.78rem;
+  letter-spacing: 0.4px;
   text-transform: uppercase;
   white-space: nowrap;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(168, 85, 247, 0.1);
+  transition: all 0.2s ease;
+  box-shadow: none;
   user-select: none;
 }
 
@@ -2460,11 +2469,10 @@ select,
 }
 
 .cat-pill:hover {
-  background: linear-gradient(180deg, #240a50 0%, #13052c 100%);
-  border-color: #a855f7;
+  background: #073F68;
+  border-color: #35E52D;
   color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7), 0 0 16px rgba(168, 85, 247, 0.6);
+  transform: translateY(-1px);
 }
 
 .cat-pill:hover i {
@@ -2474,14 +2482,10 @@ select,
 }
 
 .cat-pill.active {
-  background: linear-gradient(180deg, #781ff5 0%, #590fc9 55%, #3d088f 100%);
-  border-color: #c084fc;
+  background: linear-gradient(180deg, #00B84F 0%, #008A3D 100%);
+  border: 1.5px solid #35E52D;
   color: #ffffff;
-  box-shadow:
-    0 4px 0 #240459,
-    0 6px 18px rgba(120, 31, 245, 0.75),
-    inset 0 1px 2px rgba(255, 255, 255, 0.5),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 12px rgba(53, 229, 45, 0.45);
   transform: translateY(-1px);
 }
 
@@ -2491,30 +2495,22 @@ select,
 }
 
 .cat-pill.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 20%;
-  right: 20%;
-  height: 2.5px;
-  background: #f5b300;
-  box-shadow: 0 0 8px #f5b300, 0 0 14px rgba(245, 179, 0, 0.8);
-  border-radius: 2px;
+  display: none;
 }
 
 .hot-tag {
-  background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+  background: #ef4444;
   color: #ffffff;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.62rem;
-  font-weight: 900;
-  padding: 2px 7px;
-  clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
-  letter-spacing: 0.6px;
-  box-shadow: 0 0 10px rgba(239, 68, 68, 0.85);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.6rem;
+  font-weight: 800;
+  padding: 1px 5px;
+  clip-path: none;
+  border-radius: 4px;
+  letter-spacing: 0.4px;
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  gap: 2px;
   margin-left: 2px;
 }
 
@@ -2532,55 +2528,61 @@ select,
 }
 
 .cat-pill-sm {
-  padding: 6px 13px !important;
-  font-size: 0.78rem !important;
-  letter-spacing: 0.6px !important;
-  clip-path: polygon(6px 0%, calc(100% - 6px) 0%, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0% calc(100% - 6px), 0% 6px) !important;
+  padding: 5px 12px !important;
+  font-size: 0.74rem !important;
+  letter-spacing: 0.4px !important;
+  clip-path: none !important;
+  border-radius: 6px !important;
 }
 
 .search-box-station {
   position: relative;
-  min-width: 250px;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+  display: flex;
+  align-items: center;
+  background: #042742;
+  /* border: 1px solid #0B4A70; */
+  border-radius: 8px;
+  padding: 4px 12px;
+  min-width: 240px;
+  transition: all 0.2s ease;
 }
 
 .search-box-station input {
-  background: #090317;
-  border: 1.5px solid #4d1d8f;
+  background: #042742;
+  border: 1px solid #0B4A70;
+  border:none;
   border-radius: 8px;
-  padding: 8px 38px 8px 38px;
+  padding: 6px 36px;
   color: #ffffff;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.6px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
   outline: none;
   width: 100%;
   transition: all 0.25s ease;
 }
 
 .search-box-station input::placeholder {
-  color: #7f6a9e;
-  font-weight: 500;
-  font-size: 0.88rem;
+  color: #8CAEC7;
+  font-weight: 400;
+  font-size: 0.78rem;
 }
 
 .search-box-station input:focus {
-  border-color: #a855f7;
-  background: #110526;
-  filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.65));
+  border-color: #35E52D;
+  background: #06385D;
+  box-shadow: 0 0 10px rgba(53, 229, 45, 0.35);
 }
 
 .search-box-station i.fa-magnifying-glass {
   position: absolute;
-  left: 14px;
+  left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: #f5b300;
-  font-size: 0.85rem;
+  color: #8CAEC7;
+  font-size: 0.8rem;
   pointer-events: none;
-  text-shadow: 0 0 8px rgba(245, 179, 0, 0.6);
-  z-index: 2;
 }
 
 .search-box-station .clear-btn {
@@ -2635,8 +2637,8 @@ select,
    ========================================================================== */
 .games-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+  gap: 10px;
   transition: all 0.3s ease;
   align-items: stretch;
   margin-bottom: 24px;
@@ -2648,7 +2650,7 @@ select,
 .chamfer-card-wrapper {
   position: relative;
   width: 100%;
-  height: 250px;
+  height: 190px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2657,12 +2659,17 @@ select,
 .chamfer-casino-card {
   position: relative;
   width: 100%;
-  height: 250px;
+  height: 190px;
   cursor: pointer;
   user-select: none;
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   display: flex;
   flex-direction: column;
+  background: linear-gradient(180deg, #073F68 0%, #06385D 100%);
+  border: 1px solid #0B4A70;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
 /* Theme Neon Variables */
@@ -2702,41 +2709,30 @@ select,
 }
 
 .chamfer-casino-card:hover {
-  transform: translateY(-5px);
-  filter: drop-shadow(0 0 8px var(--neon-primary));
+  transform: translateY(-4px);
+  border-color: #35E52D;
+  box-shadow: 0 8px 24px rgba(4, 39, 66, 0.8), 0 0 14px rgba(53, 229, 45, 0.35);
 }
 
 .chamfer-border-wrap {
   position: relative;
   width: 100%;
   height: 100%;
-  clip-path: polygon(14px 0%,
-      calc(100% - 14px) 0%,
-      100% 14px,
-      100% calc(100% - 14px),
-      calc(100% - 14px) 100%,
-      14px 100%,
-      0% calc(100% - 14px),
-      0% 14px);
-  background: var(--neon-primary);
-  padding: 1.5px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
-  transition: all 0.25s ease;
+  clip-path: none;
+  border-radius: 12px;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  overflow: hidden;
 }
 
 .chamfer-inner-deck {
   position: relative;
   width: 100%;
   height: 100%;
-  clip-path: polygon(13px 0%,
-      calc(100% - 13px) 0%,
-      100% 13px,
-      100% calc(100% - 13px),
-      calc(100% - 13px) 100%,
-      13px 100%,
-      0% calc(100% - 13px),
-      0% 13px);
-  background: #090217;
+  clip-path: none;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #073F68 0%, #063B63 100%);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -2744,36 +2740,31 @@ select,
 }
 
 .card-top-neon-stripe {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 44px;
-  height: 3.5px;
-  background: var(--neon-accent);
-  border-radius: 0 0 3px 3px;
-  box-shadow: 0 0 10px var(--neon-accent), 0 0 20px var(--neon-primary);
-  z-index: 12;
+  display: none;
 }
 
 .card-top-badge-row {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 5px;
+  right: 5px;
   z-index: 12;
 }
 
 .chamfer-badge {
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 900;
-  font-size: 0.65rem;
-  letter-spacing: 0.6px;
-  padding: 2px 7px;
-  border-radius: 6px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.58rem;
+  letter-spacing: 0.4px;
+  padding: 2px 6px;
+  border-radius: 9999px;
   text-transform: uppercase;
   display: inline-flex;
   align-items: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  gap: 3px;
+  background: rgba(0, 157, 80, 0.25);
+  border: 1px solid #35E52D;
+  color: #42F52B;
+  box-shadow: 0 0 6px rgba(53, 229, 45, 0.35);
 }
 
 .chamfer-badge.badge-fun {
@@ -2808,7 +2799,8 @@ select,
   height: 100%;
   z-index: 2;
   overflow: hidden;
-  background: radial-gradient(circle at 50% 30%, #1e0b3d 0%, #090217 100%);
+  background: radial-gradient(circle at 50% 35%, #0a4f82 0%, #052c4a 100%);
+  border-radius: 12px;
 }
 
 .chamfer-artwork-skeleton {
@@ -2870,8 +2862,8 @@ select,
   bottom: 0;
   left: 0;
   right: 0;
-  height: 52%;
-  background: linear-gradient(180deg, transparent 0%, rgba(8, 2, 22, 0.45) 30%, rgba(8, 2, 22, 0.96) 100%);
+  height: 58%;
+  background: linear-gradient(180deg, transparent 0%, rgba(4, 30, 50, 0.55) 30%, rgba(4, 25, 42, 0.98) 100%);
   z-index: 4;
   pointer-events: none;
 }
@@ -2880,7 +2872,7 @@ select,
   position: relative;
   z-index: 6;
   margin-top: auto;
-  padding: 0 8px 10px 8px;
+  padding: 0 6px 8px 6px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -2889,15 +2881,15 @@ select,
 }
 
 .chamfer-game-title {
-  font-family: 'Rajdhani', 'Orbitron', sans-serif;
-  font-style: italic;
-  font-weight: 900;
-  font-size: 0.98rem;
-  letter-spacing: 0.8px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.3px;
   text-transform: uppercase;
   color: #ffffff;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95);
-  margin-bottom: 2px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  margin-bottom: 1px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2905,44 +2897,44 @@ select,
 }
 
 .chamfer-game-subtitle {
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 800;
-  font-size: 0.65rem;
-  letter-spacing: 0.6px;
-  color: #fde047;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.55rem;
+  letter-spacing: 0.3px;
+  color: #7cb5d8;
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
 }
 
 .btn-chamfer-neon-pill {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(0, 0, 0, 0.65) 100%), var(--btn-base);
-  border: 1.5px solid var(--btn-border);
-  border-radius: 20px;
+  background: linear-gradient(180deg, #00B84F 0%, #008A3D 100%);
+  border: 1.5px solid #35E52D;
+  border-radius: 9999px;
   color: #ffffff;
-  font-family: 'Rajdhani', sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-weight: 800;
-  font-size: 0.72rem;
-  letter-spacing: 0.8px;
-  padding: 3px 14px;
+  font-size: 0.62rem;
+  letter-spacing: 0.5px;
+  padding: 3px 12px;
   text-transform: uppercase;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  gap: 3px;
+  box-shadow: 0 2px 6px rgba(0, 60, 25, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .chamfer-casino-card:hover .btn-chamfer-neon-pill {
-  background: var(--neon-primary);
-  color: #000000;
-  border-color: #ffffff;
-  box-shadow: 0 0 14px var(--neon-primary), inset 0 1px 2px #ffffff;
+  background: linear-gradient(180deg, #10d365 0%, #009d50 100%);
+  border-color: #42F52B;
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(66, 245, 43, 0.7), inset 0 1px 1px #ffffff;
 }
 
 /* Slot Theater Modal */
@@ -3104,10 +3096,10 @@ select,
 }
 
 .section-header-title {
-  font-family: 'Rajdhani', sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-weight: 800;
-  font-size: 1.15rem;
-  letter-spacing: 1px;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
   color: #ffffff;
   text-transform: uppercase;
   display: flex;
@@ -3117,7 +3109,7 @@ select,
 }
 
 .section-header-title i {
-  color: #f5b300;
+  color: #35E52D;
 }
 
 .btn-view-all {
@@ -3146,11 +3138,11 @@ select,
 }
 
 .showcase-block-panel {
-  background: linear-gradient(180deg, rgba(20, 7, 48, 0.85) 0%, rgba(10, 3, 26, 0.95) 100%);
-  border: 1.5px solid rgba(120, 31, 245, 0.4);
+  background: #06385D;
+  border: 1px solid #0B4A70;
   border-radius: 14px;
-  padding: 10px 14px 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  padding: 12px 16px 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 /* -------------------------------------------------------------
@@ -3319,7 +3311,7 @@ select,
 
 /* Footer full info */
 .winbet-full-footer {
-  background: #04010b;
+  background: #062b47;
   border-top: 1px solid rgba(107, 34, 199, 0.3);
   padding: 30px 20px 85px 20px;
   color: #9d8ec2;
@@ -3366,8 +3358,8 @@ select,
 }
 
 .payment-chip {
-  background: #0d0622;
-  border: 1px solid #3b1875;
+  background: var(--input-bg, #042742);
+  border: 1px solid var(--card-border, #0B4A70);
   border-radius: 6px;
   padding: 4px 10px;
   font-size: 0.76rem;
@@ -3417,11 +3409,11 @@ select,
 
 /* 1. Live Winners Ticker */
 .live-winners-ticker-wrap {
-  background: linear-gradient(90deg, rgba(20, 8, 48, 0.85) 0%, rgba(35, 12, 80, 0.7) 50%, rgba(20, 8, 48, 0.85) 100%);
-  border: 1.5px solid rgba(147, 51, 234, 0.35);
-  border-radius: 16px;
-  padding: 14px 18px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  background: #06385D;
+  border: 1px solid #0B4A70;
+  border-radius: 12px;
+  padding: 10px 16px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
   position: relative;
   overflow: hidden;
 }
@@ -3451,11 +3443,11 @@ select,
 }
 
 .live-ticker-header-title {
-  font-family: 'Rajdhani', sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-weight: 800;
-  letter-spacing: 1px;
-  font-size: 0.92rem;
-  color: #f3effc;
+  letter-spacing: 0.5px;
+  font-size: 0.8rem;
+  color: #FFFFFF;
   text-transform: uppercase;
 }
 
@@ -3484,21 +3476,21 @@ select,
 }
 
 .winner-chip-card {
-  background: rgba(13, 6, 34, 0.85);
-  border: 1px solid rgba(168, 85, 247, 0.28);
-  border-radius: 12px;
-  padding: 8px 12px;
+  background: #042742;
+  border: 1px solid #0B4A70;
+  border-radius: 8px;
+  padding: 6px 10px;
   display: flex;
   align-items: center;
   gap: 10px;
-  min-width: 220px;
+  min-width: 175px;
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .winner-chip-card:hover {
   transform: translateY(-2px);
-  border-color: #f5b300;
-  box-shadow: 0 4px 15px rgba(245, 179, 0, 0.25);
+  border-color: #35E52D;
+  box-shadow: 0 4px 12px rgba(53, 229, 45, 0.3);
 }
 
 .winner-thumb-wrap {
@@ -3525,31 +3517,31 @@ select,
 }
 
 .winner-player-tag {
-  font-size: 0.74rem;
-  font-weight: 700;
-  color: #c4b5fd;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #D8E2EC;
 }
 
 .winner-multi-badge {
-  background: rgba(34, 197, 94, 0.2);
-  border: 1px solid rgba(34, 197, 94, 0.45);
-  color: #4ade80;
-  font-size: 0.65rem;
+  background: rgba(0, 157, 80, 0.25);
+  border: 1px solid #35E52D;
+  color: #42F52B;
+  font-size: 0.62rem;
   font-weight: 800;
   padding: 1px 6px;
-  border-radius: 4px;
+  border-radius: 9999px;
 }
 
 .winner-amount {
-  font-size: 0.88rem;
+  font-size: 0.78rem;
   font-weight: 800;
-  color: #f5b300;
-  text-shadow: 0 0 8px rgba(245, 179, 0, 0.35);
+  color: #fbbf24;
+  text-shadow: 0 0 6px rgba(251, 191, 36, 0.35);
 }
 
 .winner-time {
-  font-size: 0.65rem;
-  color: #94a3b8;
+  font-size: 0.62rem;
+  color: #8CAEC7;
 }
 
 /* 2. Tournament Arena Section */
@@ -3761,7 +3753,7 @@ select,
 
 /* 5. Smart PC Help Banner */
 .smart-pc-help-banner {
-  background: linear-gradient(90deg, rgba(24, 9, 58, 0.9) 0%, rgba(38, 14, 88, 0.85) 50%, rgba(18, 6, 44, 0.9) 100%);
+  /* background: linear-gradient(90deg, rgba(24, 9, 58, 0.9) 0%, rgba(38, 14, 88, 0.85) 50%, rgba(18, 6, 44, 0.9) 100%); */
   border: 1.5px solid rgba(245, 179, 0, 0.4);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
@@ -3780,7 +3772,7 @@ select,
 }
 
 .trust-pill {
-  background: rgba(10, 3, 26, 0.7);
+  /* background: rgba(10, 3, 26, 0.7); */
   border: 1px solid rgba(139, 92, 246, 0.3);
   border-radius: 20px;
   padding: 6px 14px;
@@ -3818,8 +3810,8 @@ select,
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #1f0b48 0%, #0e0524 100%);
-  border: 1.5px solid rgba(147, 51, 234, 0.45);
+   background: linear-gradient(180deg, #00B84F 0%, #008A3D 100%);
+  border: 1.5px solid #35E52D;
   color: #e9d5ff;
   display: inline-flex;
   align-items: center;
@@ -3844,4 +3836,285 @@ select,
   cursor: not-allowed;
   transform: none !important;
   border-color: rgba(147, 51, 234, 0.2);
+}
+
+/* ==========================================================================
+   BETWISE MASTER DESIGN SYSTEM OVERRIDES (UI THEME REDESIGN ONLY)
+   Strictly adheres to:
+   - Deep navy-blue (#063B63) and dark ocean-blue (#073F68) surfaces
+   - Deep blue header & sidebar (#06385D)
+   - Bright green buttons (#00B84F to #008A3D) with neon border (#35E52D)
+   - Subtle dark teal-blue borders & dividers (#0B4A70)
+   - Bold white (#FFFFFF) & light-gray (#D8E2EC) typography
+   ========================================================================== */
+
+/* Universal Betwise Primary Action Buttons */
+.btn-gold-action,
+.btn-winbet,
+.btn-purple-action,
+.btn-success-action,
+.btn-confirm-action,
+#btnPrimaryCashout {
+  background: linear-gradient(180deg, #00B84F 0%, #008A3D 100%) !important;
+  border: 1.5px solid #35E52D !important;
+  color: #FFFFFF !important;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 0.82rem !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  clip-path: none !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 3px 8px rgba(0, 80, 35, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-gold-action:hover,
+.btn-winbet:hover,
+.btn-purple-action:hover,
+.btn-success-action:hover,
+.btn-confirm-action:hover,
+#btnPrimaryCashout:hover {
+  background: linear-gradient(180deg, #10d365 0%, #009d50 100%) !important;
+  border-color: #42F52B !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 16px rgba(66, 245, 43, 0.65), inset 0 1px 1px #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Secondary & Cancel Buttons */
+.btn-cancel-action,
+.btn-outline-secondary {
+  background: #042742 !important;
+  border: 1px solid #0B4A70 !important;
+  color: #D8E2EC !important;
+  border-radius: 9999px !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-cancel-action:hover,
+.btn-outline-secondary:hover {
+  background: #073F68 !important;
+  border-color: #35E52D !important;
+  color: #FFFFFF !important;
+}
+
+/* Brand Name in Header & Footer */
+.brand-name {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 1.65rem !important;
+  letter-spacing: -0.5px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  text-decoration: none !important;
+}
+
+.brand-name .brand-bet,
+.brand-name span:first-child {
+  color: #00A3FF !important;
+  font-weight: 800 !important;
+  text-shadow: 0 0 10px rgba(0, 163, 255, 0.35) !important;
+}
+
+.brand-name .brand-wise,
+.brand-name span:last-child {
+  color: #35E52D !important;
+  font-weight: 800 !important;
+  text-shadow: 0 0 10px rgba(53, 229, 45, 0.45) !important;
+}
+
+/* Header & Station Badge */
+.smart-pc-header,
+.custom-navbar {
+  background: #06385D !important;
+  border-bottom: 1.5px solid #0B4A70 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45) !important;
+}
+
+.station-badge {
+  background: #042742 !important;
+  border: 1px solid #0B4A70 !important;
+  border-radius: 9999px !important;
+  clip-path: none !important;
+  color: #D8E2EC !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
+}
+
+.station-badge .badge {
+  background: rgba(11, 74, 112, 0.6) !important;
+  border: 1px solid #0B4A70 !important;
+  color: #D8E2EC !important;
+  border-radius: 9999px !important;
+}
+
+/* Balance Display */
+.balance-chip {
+  background: #042742 !important;
+  border: 1px solid #0B4A70 !important;
+  border-radius: 9999px !important;
+  clip-path: none !important;
+  padding: 4px 16px !important;
+}
+
+.balance-chip .label {
+  color: #8CAEC7 !important;
+  font-weight: 700 !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+}
+
+.balance-chip .val {
+  color: #35E52D !important;
+  font-weight: 800 !important;
+  font-size: 1.12rem !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
+}
+
+/* View All Games Button */
+#viewAllGamesBtn,
+#viewAllGamesBtn.btn-warning,
+#viewAllGamesBtn.btn-outline-warning {
+  background: linear-gradient(180deg, #00B84F 0%, #008A3D 100%) !important;
+  border: 1.5px solid #35E52D !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  font-size: 0.74rem !important;
+  border-radius: 9999px !important;
+  padding: 5px 14px !important;
+  box-shadow: 0 2px 6px rgba(0, 80, 35, 0.45) !important;
+}
+
+#viewMoreGamesBtn,
+#viewMoreGamesBtn.btn-warning {
+  background: linear-gradient(180deg, #00B84F 0%, #008A3D 100%) !important;
+  border: 1.5px solid #35E52D !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 14px rgba(0, 80, 35, 0.45) !important;
+}
+
+/* Modal Windows & Dialogs */
+.modal-theme-dark .modal-content,
+.modal-content {
+  background: linear-gradient(180deg, #073F68 0%, #063B63 100%) !important;
+  border: 1.5px solid #0B4A70 !important;
+  border-radius: 18px !important;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.85), 0 0 30px rgba(53, 229, 45, 0.2) !important;
+  color: #FFFFFF !important;
+}
+
+.modal-header,
+.modal-footer {
+  border-color: #0B4A70 !important;
+}
+
+/* Slot Theater Modal Overlay & Header */
+.slot-theater-body {
+  background: #063B63 !important;
+}
+
+.theater-kiosk-bar {
+  background: #06385D !important;
+  border-bottom: 1px solid #0B4A70 !important;
+}
+
+/* Clean Form Controls */
+.form-control,
+.form-select {
+  background-color: #042742 !important;
+  border: 1px solid #0B4A70 !important;
+  color: #FFFFFF !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #35E52D !important;
+  box-shadow: 0 0 10px rgba(53, 229, 45, 0.35) !important;
+}
+
+/* Hardware Simulator Bar & Admin Panels */
+.sim-bar-dock,
+.hardware-sim-panel {
+  background: #06385D !important;
+  border: 1px solid #0B4A70 !important;
+}
+
+/* Progress Bars */
+.progress {
+  background-color: rgba(11, 74, 112, 0.5) !important;
+}
+
+.progress-bar,
+.progress-bar.bg-warning {
+  background: linear-gradient(90deg, #009D50 0%, #35E52D 100%) !important;
+}
+
+/* Text & Border Color Helpers */
+.text-warning {
+  color: #35E52D !important;
+}
+
+.text-gold {
+  color: #35E52D !important;
+}
+
+.border-warning {
+  border-color: #35E52D !important;
+}
+
+.border-purple-subtle,
+.border-purple {
+  border-color: #0B4A70 !important;
+}
+
+/* Swiper Navigation & Pagination */
+.smartpc-hero-btn {
+  background: rgba(4, 39, 66, 0.85) !important;
+  border: 1.5px solid #0B4A70 !important;
+  color: #D8E2EC !important;
+  border-radius: 50% !important;
+  width: 36px !important;
+  height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 0.95rem !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
+  cursor: pointer !important;
+  backdrop-filter: blur(8px) !important;
+  transition: all 0.25s ease !important;
+  z-index: 10 !important;
+}
+
+.smartpc-hero-btn:hover {
+  background: #073F68 !important;
+  border-color: #35E52D !important;
+  color: #35E52D !important;
+  transform: translateY(-50%) scale(1.1) !important;
+  box-shadow: 0 0 16px rgba(53, 229, 45, 0.5) !important;
+}
+
+.smartpc-hero-pagination {
+  bottom: 12px !important;
+}
+
+.smartpc-hero-bullet {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.35) !important;
+  opacity: 1 !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+}
+
+.smartpc-hero-bullet-active {
+  background: #35E52D !important;
+  box-shadow: 0 0 10px rgba(53, 229, 45, 0.75) !important;
+  width: 26px !important;
+  border-radius: 9999px !important;
 }

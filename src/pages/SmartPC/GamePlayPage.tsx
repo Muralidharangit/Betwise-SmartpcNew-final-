@@ -373,7 +373,13 @@ export const GamePlayPage: React.FC = () => {
   };
 
   return (
-    <div id="gamePlayContainer" className="d-flex flex-column min-vh-100" style={{ background: "#080214" }}>
+    <div
+      id="gamePlayContainer"
+      className="d-flex flex-column min-vh-100"
+      style={{
+        background: "linear-gradient(180deg, rgba(6, 43, 72, 0.82) 0%, rgba(4, 25, 42, 0.94) 100%), url('/assets/images/bg-1.png') center/cover no-repeat fixed",
+      }}
+    >
       {/* ==============================================================
            IDENTICAL TOP GAMING HEADER (Matching Smart PC Lobby Exactly)
       =============================================================== */}
@@ -384,9 +390,9 @@ export const GamePlayPage: React.FC = () => {
             {/* Back to Lobby Button */}
             <Link
               to="/smart-pc"
-              className="btn btn-sm btn-outline-warning fw-bold px-3 rounded-pill d-flex align-items-center gap-2"
+              className="btn btn-sm btn-outline-success fw-bold px-3 rounded-pill d-flex align-items-center gap-2"
               title="Return to Smart PC Lobby"
-              style={{ fontSize: "0.82rem", borderColor: "rgba(245, 179, 0, 0.7)" }}
+              style={{ fontSize: "0.82rem", borderColor: "#35E52D", color: "#42F52B" }}
             >
               <i className="fa-solid fa-arrow-left"></i>
               <span>LOBBY</span>
@@ -397,10 +403,16 @@ export const GamePlayPage: React.FC = () => {
               className="d-flex align-items-center gap-2 text-decoration-none me-1"
               title="Betwise Station"
             >
-              <span className="brand-name">
-                <span style={{ color: "#f5b300" }}>BET</span>
-                <span style={{ color: "#ffffff" }}>WISE</span>
-              </span>
+              <img
+                src="/assets/images/betwise-logo.png"
+                alt="Betwise"
+                style={{
+                  height: "32px",
+                  width: "auto",
+                  objectFit: "contain",
+                  filter: "drop-shadow(0 2px 8px rgba(0, 0, 0, 0.45))",
+                }}
+              />
             </Link>
 
             {/* Dedicated Station Badge */}
@@ -410,24 +422,24 @@ export const GamePlayPage: React.FC = () => {
                 className="badge border text-light px-2 py-1 d-inline-flex align-items-center gap-1"
                 style={{
                   fontSize: "0.74rem",
-                  background: "rgba(94, 23, 187, 0.4)",
-                  borderColor: "rgba(168, 85, 247, 0.5)",
+                  background: "rgba(11, 74, 112, 0.5)",
+                  borderColor: "#0B4A70",
                 }}
               >
-                <i className="fa-solid fa-desktop text-warning"></i> SMART PC
+                <i className="fa-solid fa-desktop text-success"></i> SMART PC
               </span>
               <span id="stationCodeDisplay" className="fw-bold text-light">
                 {machine.name || "Smart PC-03"}
               </span>
               <span className="text-secondary">|</span>
-              <span className="text-warning-subtle" id="stationShopDisplay" style={{ fontSize: "0.76rem" }}>
+              <span className="text-light-emphasis" id="stationShopDisplay" style={{ fontSize: "0.76rem", color: "#D8E2EC" }}>
                 {machine.shopName}
               </span>
             </div>
 
             {/* Game Badge */}
             <div className="d-none d-lg-flex align-items-center gap-2 ms-2">
-              <span className="badge bg-dark border border-warning text-warning fw-bold px-3 py-1" style={{ fontSize: "0.78rem", letterSpacing: "0.5px" }}>
+              <span className="badge bg-dark border border-success-subtle text-success fw-bold px-3 py-1" style={{ fontSize: "0.78rem", letterSpacing: "0.5px" }}>
                 <i className="fa-solid fa-gamepad me-1"></i> {game?.title || targetGameId}
               </span>
             </div>

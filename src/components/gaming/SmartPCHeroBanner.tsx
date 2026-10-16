@@ -12,17 +12,37 @@ interface SmartPCHeroBannerProps {
   onOpenCashout?: () => void;
 }
 
-export const SmartPCHeroBanner: React.FC<SmartPCHeroBannerProps> = () => {
+const BANNERS = [
+  {
+    id: "bn1",
+    src: "/assets/banner/bn1.png",
+    alt: "Zeus Blitz Championship - Total Cash Prize Pool: ₹5,00,000.00",
+  },
+  {
+    id: "bn2",
+    src: "/assets/banner/3.png",
+    alt: "Mega Jackpots and Tournaments",
+  },
+  {
+    id: "bn3",
+    src: "/assets/banner/2.png",
+    alt: "VIP Rewards and Daily Jackpots",
+  },
+];
 
+export const SmartPCHeroBanner: React.FC<SmartPCHeroBannerProps> = ({
+  onOpenTournament,
+  onExploreGames,
+}) => {
   return (
-    <div className="smartpc-hero-wrapper mb-4">
+    <div className="smartpc-hero-wrapper mb-3 mb-md-4">
       <div className="smartpc-hero-frame">
         <Swiper
           modules={[Autoplay, Pagination, Navigation, EffectFade]}
           effect="fade"
           fadeEffect={{ crossFade: true }}
           autoplay={{
-            delay: 5500,
+            delay: 5000,
             disableOnInteraction: false,
             pauseOnMouseEnter: true,
           }}
@@ -37,34 +57,31 @@ export const SmartPCHeroBanner: React.FC<SmartPCHeroBannerProps> = () => {
             nextEl: ".smartpc-hero-btn-next",
           }}
           loop={true}
+          speed={600}
           className="smartpc-hero-swiper"
         >
-          {/* ==============================================================
-               SLIDE 1
-          =============================================================== */}
-          <SwiperSlide>
-            <div className="smartpc-slide p-0">
-              <img src="/assets/banner/1.png" alt="Banner 1" style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} />
-            </div>
-          </SwiperSlide>
-
-          {/* ==============================================================
-               SLIDE 2
-          =============================================================== */}
-          <SwiperSlide>
-            <div className="smartpc-slide p-0">
-              <img src="/assets/banner/2.png" alt="Banner 2" style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} />
-            </div>
-          </SwiperSlide>
-
-          {/* ==============================================================
-               SLIDE 3
-          =============================================================== */}
-          <SwiperSlide>
-            <div className="smartpc-slide p-0">
-              <img src="/assets/banner/3.png" alt="Banner 3" style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} />
-            </div>
-          </SwiperSlide>
+          {BANNERS.map((banner, idx) => (
+            <SwiperSlide key={banner.id}>
+              <div
+                className="smartpc-slide p-0"
+                onClick={() => {
+                  if (idx === 0 && onOpenTournament) {
+                    onOpenTournament();
+                  } else if (onExploreGames) {
+                    onExploreGames();
+                  }
+                }}
+              >
+                <img
+                  src={banner.src}
+                  alt={banner.alt}
+                  className="smartpc-banner-img"
+                  loading={idx === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                />
+              </div>
+            </SwiperSlide>
+          ))}
         </Swiper>
 
         {/* Custom Navigation Controls */}

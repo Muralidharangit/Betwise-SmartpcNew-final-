@@ -137,8 +137,19 @@ export const GameGrid: React.FC<GameGridProps> = ({
         if (n === "dice") return "/assets/games/SPRIBE/DICE.png";
         if (n === "balloon" || n === "ballon") return "/assets/games/SPRIBE/BALLON.png";
 
-        // General default local placeholder
-        return "/assets/games/placeholder.png";
+        // General default local placeholder - dynamic rotation of vibrant casino game artworks
+        const localCovers = [
+          "/assets/games/1.png",
+          "/assets/games/2.png",
+          "/assets/games/3.png",
+          "/assets/games/4.png",
+          "/assets/games/5.png",
+          "/assets/games/6.png",
+        ];
+        const charCode = (item.name || "game")
+          .split("")
+          .reduce((acc, c) => acc + c.charCodeAt(0), 0);
+        return localCovers[charCode % localCovers.length];
       })(),
       actionText: "PLAY NOW",
       kind: item.kind || "provider",
@@ -554,7 +565,7 @@ export const GameGrid: React.FC<GameGridProps> = ({
               <>
                 {/* Left Side: Game Count & Progress Bar */}
                 <div className="d-flex align-items-center gap-3">
-                  <div className="text-secondary small">
+                  <div className="text-white small">
                     Showing <strong className="text-warning">{catalogGames.length}</strong> of{" "}
                     <strong className="text-light">{totalGames}</strong> Live Games
                   </div>
@@ -605,7 +616,7 @@ export const GameGrid: React.FC<GameGridProps> = ({
               </>
             ) : (
               <>
-                <div className="text-secondary small">
+                <div className="text-white small">
                   Showing all <strong className="text-warning">{totalGames || catalogGames.length}</strong> games
                 </div>
                 <div className="d-flex align-items-center gap-2 text-secondary small py-2 px-3 rounded-pill bg-dark border border-secondary border-opacity-25">

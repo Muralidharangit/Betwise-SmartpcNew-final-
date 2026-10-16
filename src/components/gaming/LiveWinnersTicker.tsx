@@ -148,7 +148,7 @@ export const LiveWinnersTicker: React.FC = React.memo(() => {
         <div className="d-flex align-items-center gap-2">
           <div className="text-secondary small d-none d-md-flex align-items-center gap-1 me-2">
             <i className="fa-solid fa-clock-rotate-left"></i>
-            <span>Updating live</span>
+            <span className="text-white">Updating live</span>
           </div>
 
           <button

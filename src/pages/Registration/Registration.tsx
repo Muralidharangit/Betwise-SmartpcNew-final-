@@ -98,14 +98,33 @@ export const Registration: React.FC<RegistrationProps> = ({
   const hasExistingMachine = Boolean(localStorage.getItem("winbet_machine_id"));
 
   return (
-    <div className="d-flex flex-column min-vh-100" style={{ background: "radial-gradient(circle at 50% 15%, #1d0938 0%, #080214 100%)" }}>
+    <div
+      className="d-flex flex-column min-vh-100"
+      style={{
+        background: "linear-gradient(180deg, rgba(6, 43, 72, 0.78) 0%, rgba(4, 25, 42, 0.92) 100%), url('/assets/images/bg-1.png') center/cover no-repeat fixed",
+      }}
+    >
       <div className="container-fluid px-lg-5 py-3 d-flex flex-column flex-grow-1">
         {/* Center Content Wrapper */}
         <div className="my-auto w-100 py-2">
           <div id="wizardContainer" className="row justify-content-center py-2">
-            <div className="col-12 col-md-8 col-lg-5 col-xl-4">
+            <div className="col-12 col-md-8 col-lg-5 col-xl-4 text-center">
+              {/* Official Betwise Brand Logo */}
+              <div className="text-center mb-3">
+                <img
+                  src="/assets/images/betwise-logo.png"
+                  alt="Betwise"
+                  style={{
+                    height: "48px",
+                    width: "auto",
+                    objectFit: "contain",
+                    filter: "drop-shadow(0 4px 14px rgba(0, 0, 0, 0.7))",
+                  }}
+                />
+              </div>
+
               <div
-                className="winbet-card active-step-card"
+                className="winbet-card active-step-card text-start"
                 style={{
                   animation: "modalPopIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards",
                   minHeight: "auto",

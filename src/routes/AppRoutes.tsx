@@ -25,7 +25,7 @@ export const AppRoutes: React.FC = () => {
   const hasRegisteredMachine = Boolean(localStorage.getItem("winbet_machine_id"));
 
   return (
-    <Suspense fallback={<Loading message="Loading Winbet Gaming Machine..." />}>
+    <Suspense fallback={<Loading message="Loading Betwise Smart PC..." />}>
       <Routes>
         {/* Root redirect: Go directly to Smart PC Lobby if already registered, else go to register */}
         <Route path="/" element={<Navigate to={hasRegisteredMachine ? "/smart-pc" : "/register"} replace />} />
