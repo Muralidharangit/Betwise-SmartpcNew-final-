@@ -399,11 +399,22 @@ export const api = {
         });
         const json = await res.json();
         if (res.ok && json.success && Array.isArray(json.data)) {
-          const total = json.pagination?.total || json.data.length;
+          // Filter out local dummy betting games - only return live API games
+          const liveGames = json.data.filter((g: SmartPCGameItem) => {
+            const isLocal =
+              g.kind === "local" ||
+              g.provider?.toLowerCase() === "dummygame" ||
+              g.provider?.toLowerCase() === "local";
+            return !isLocal;
+          });
+
+          const total = json.pagination?.total
+            ? (liveGames.length !== json.data.length ? liveGames.length : json.pagination.total)
+            : liveGames.length;
           const lastPage = json.pagination?.last_page || 1;
           const currentPage = json.pagination?.current_page || page;
           const result: SmartPCGamesPageResponse = {
-            games: json.data,
+            games: liveGames,
             currentPage,
             lastPage,
             total,
@@ -506,11 +517,27 @@ export const api = {
         broadcastBalanceChange(json.data.current_balance);
         return json.data;
       } else if (json.message) {
-        throw new Error(json.message);
+        if (
+          json.message.toLowerCase().includes("not found") ||
+          json.message.toLowerCase().includes("unregistered") ||
+          json.message.toLowerCase().includes("unbound")
+        ) {
+          console.warn("Station unregistered on backend, using local simulation for placeBet:", json.message);
+        } else {
+          throw new Error(json.message);
+        }
       }
     } catch (err) {
       console.warn("API placeBet error / executing outcome:", err);
-      if (err instanceof Error && err.message && !err.message.includes("Failed to fetch") && !err.message.includes("NetworkError")) {
+      if (
+        err instanceof Error &&
+        err.message &&
+        !err.message.includes("Failed to fetch") &&
+        !err.message.includes("NetworkError") &&
+        !err.message.toLowerCase().includes("not found") &&
+        !err.message.toLowerCase().includes("unregistered") &&
+        !err.message.toLowerCase().includes("unbound")
+      ) {
         throw err;
       }
     }

@@ -21,19 +21,35 @@ export const GamePlayPage: React.FC = () => {
   const passedGame = location.state?.game as GameItem | undefined;
   const targetGameId = passedGame?.uuid || gameId || passedGame?.id || "aviator";
 
+  const isLocalArcade =
+    passedGame?.kind === "local" ||
+    [
+      "red_black",
+      "coin_flip",
+      "dice_roll",
+      "hi_lo",
+      "odd_even",
+      "roulette",
+      "card_suit",
+      "goal_kick",
+      "lucky_wheel",
+      "lucky_nine",
+    ].includes(String(targetGameId).toLowerCase());
+
   const [game, setGame] = useState<GameItem | null>(() => {
     if (passedGame) return passedGame;
     return {
       id: targetGameId,
       name: String(targetGameId),
       title: String(targetGameId).replace(/[-_]/g, " ").toUpperCase(),
-      category: "slots",
-      categories: ["slots", "popular"],
+      category: isLocalArcade ? "classic" : "slots",
+      categories: [isLocalArcade ? "classic" : "slots"],
       theme: "theme-gold",
-      image: "/assets/games/SPRIBE/AVIATOR.png",
-      kind: "provider",
-      provider: "Live Provider",
+      image: "/assets/games/placeholder.png",
+      kind: isLocalArcade ? "local" : "provider",
+      provider: isLocalArcade ? "dummyGame" : "Live Provider",
       actionText: "PLAY NOW",
+      choices: [],
     };
   });
 
@@ -48,31 +64,37 @@ export const GamePlayPage: React.FC = () => {
             g.name.toLowerCase() === String(targetGameId).toLowerCase()
         );
         if (found) {
+          const kind = found.kind || (isLocalArcade ? "local" : "provider");
           setGame({
             id: found.id || found.uuid || targetGameId,
             name: found.name.toLowerCase(),
             title: found.name.toUpperCase(),
-            subtitle: found.description || "LIVE PROVIDER GAME",
+            subtitle: found.description || (kind === "local" ? "LOCAL BETTING GAME" : "LIVE PROVIDER GAME"),
             category: (found.category || "slots").toLowerCase(),
             categories: [(found.category || "slots").toLowerCase()],
             theme: "theme-gold",
             badge: { text: "LIVE", type: "live" },
-            image: found.image || found.provider_image || "/assets/games/SPRIBE/AVIATOR.png",
+            image: found.image || found.provider_image || "/assets/games/placeholder.png",
             actionText: "PLAY NOW",
-            kind: found.kind || "provider",
+            kind,
             provider: found.provider || "Game Provider",
             uuid: found.uuid || String(found.id),
+            choices: found.choices || [],
           });
+          if (kind === "local") {
+            setPlayMode("arcade");
+            setIsLaunching(false);
+          }
         }
       }).catch(() => {});
     }
-  }, [passedGame, targetGameId]);
+  }, [passedGame, targetGameId, isLocalArcade]);
 
   // Launch state
   const [gameUrl, setGameUrl] = useState<string | null>(null);
-  const [isLaunching, setIsLaunching] = useState(true);
+  const [isLaunching, setIsLaunching] = useState(!isLocalArcade);
   const [launchError, setLaunchError] = useState<string | null>(null);
-  const [playMode, setPlayMode] = useState<"stream" | "arcade">("stream");
+  const [playMode, setPlayMode] = useState<"stream" | "arcade">(isLocalArcade ? "arcade" : "stream");
   const [soundEnabled, setSoundEnabled] = useState(true);
 
   // Local betting arcade state
@@ -145,6 +167,13 @@ export const GamePlayPage: React.FC = () => {
   }, [updateBalance]);
 
   const initiateGameLaunch = useCallback(() => {
+    if (game?.kind === "local" || isLocalArcade) {
+      setPlayMode("arcade");
+      setIsLaunching(false);
+      setLaunchError(null);
+      return;
+    }
+
     setIsLaunching(true);
     setLaunchError(null);
 
@@ -152,20 +181,18 @@ export const GamePlayPage: React.FC = () => {
       .launchProviderGame(targetGameId)
       .then((res) => {
         const url = res.game_url || "";
-        const isExternalProvider =
+        const isValidStream =
           url.startsWith("http") &&
           !url.includes("/smart-pc") &&
-          !url.includes(window.location.host) &&
-          !url.includes("staging.iccpanel.com") &&
-          !url.includes("staging.game-server.winbet.com");
+          !url.includes(window.location.host);
 
-        if (isExternalProvider) {
+        if (isValidStream) {
           setGameUrl(url);
           setPlayMode("stream");
           setIsLaunching(false);
         } else {
           setLaunchError(
-            `Unable to stream "${game?.title || "Game"}". Staging provider returned a redirect instead of an active stream.`
+            `Unable to stream "${game?.title || "Game"}". Staging provider returned an invalid stream URL.`
           );
           setIsLaunching(false);
         }
@@ -175,12 +202,17 @@ export const GamePlayPage: React.FC = () => {
         setLaunchError(msg);
         setIsLaunching(false);
       });
-  }, [targetGameId, game?.title]);
+  }, [targetGameId, game?.title, game?.kind, isLocalArcade]);
 
   // 3. Launch Game Token (POST /smart-pcs/launch-game - PDF 4.6)
   useEffect(() => {
+    if (game?.kind === "local" || isLocalArcade) {
+      setPlayMode("arcade");
+      setIsLaunching(false);
+      return;
+    }
     initiateGameLaunch();
-  }, [initiateGameLaunch]);
+  }, [initiateGameLaunch, game?.kind, isLocalArcade]);
 
   // Auto-redirect to Lobby if playing game and balance is 0
   useEffect(() => {
@@ -190,21 +222,31 @@ export const GamePlayPage: React.FC = () => {
   }, [machine.balance, navigate]);
 
   // Choices map for local dummy games (PDF 4.7)
-  const getChoices = () => {
+  const getChoices = useCallback(() => {
+    if (game?.choices && Array.isArray(game.choices) && game.choices.length > 0) {
+      return game.choices;
+    }
     const name = (game?.name || "").toLowerCase();
-    if (name.includes("coin") || name.includes("flip")) return ["HEADS", "TAILS"];
-    if (name.includes("hilo") || name.includes("hi_lo")) return ["HI", "LO"];
-    if (name.includes("soccer") || name.includes("goal")) return ["LEFT", "CENTER", "RIGHT"];
-    if (name.includes("dice")) return ["1", "2", "3", "4", "5", "6"];
-    if (name.includes("odd") || name.includes("even")) return ["ODD", "EVEN"];
-    if (name.includes("roulette")) return ["RED", "BLACK", "GREEN"];
-    if (name.includes("card") || name.includes("suit")) return ["HEARTS", "DIAMONDS", "CLUBS", "SPADES"];
-    if (name.includes("wheel")) return ["A", "B", "C", "D", "E"];
-    if (name.includes("nine")) return ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    const id = String(game?.uuid || game?.id || targetGameId || "").toLowerCase();
+    if (id === "coin_flip" || name.includes("coin") || name.includes("flip")) return ["HEADS", "TAILS"];
+    if (id === "hi_lo" || name.includes("hilo") || name.includes("hi_lo")) return ["HI", "LO"];
+    if (id === "goal_kick" || name.includes("soccer") || name.includes("goal")) return ["LEFT", "CENTER", "RIGHT"];
+    if (id === "dice_roll" || name.includes("dice")) return ["1", "2", "3", "4", "5", "6"];
+    if (id === "odd_even" || name.includes("odd") || name.includes("even")) return ["ODD", "EVEN"];
+    if (id === "roulette" || name.includes("roulette")) return ["RED", "BLACK", "GREEN"];
+    if (id === "card_suit" || name.includes("card") || name.includes("suit")) return ["HEARTS", "DIAMONDS", "CLUBS", "SPADES"];
+    if (id === "lucky_wheel" || name.includes("wheel")) return ["A", "B", "C", "D", "E"];
+    if (id === "lucky_nine" || name.includes("nine")) return ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
     return ["RED", "BLACK"];
-  };
+  }, [game?.choices, game?.name, game?.uuid, game?.id, targetGameId]);
 
   const choices = getChoices();
+
+  useEffect(() => {
+    if (choices.length > 0 && !choices.includes(selectedChoice)) {
+      setSelectedChoice(choices[0]);
+    }
+  }, [choices, selectedChoice]);
 
   const handleOpenCashout = () => {
     if (machine.balance <= 0) {
@@ -357,7 +399,8 @@ export const GamePlayPage: React.FC = () => {
 
     // PDF 4.7 Local Bet via live API
     try {
-      const res = await api.placeBet(game?.name || "red_black", selectedChoice, stake);
+      const gameKey = String(game?.uuid || game?.id || targetGameId || "red_black").toLowerCase();
+      const res = await api.placeBet(gameKey, selectedChoice, stake);
       updateBalance(res.current_balance);
       setRoundResult({
         won: res.won,
@@ -524,12 +567,12 @@ export const GamePlayPage: React.FC = () => {
               <div className="d-flex flex-column align-items-center justify-content-center flex-grow-1 p-4 text-center">
                 <div className="card bg-dark border-purple-800 p-4 rounded-4 shadow-lg text-center" style={{ maxWidth: "560px" }}>
                   <img
-                    src={game?.image || "/assets/games/SPRIBE/AVIATOR.png"}
+                    src={game?.image || "/assets/games/placeholder.png"}
                     alt={game?.title}
                     style={{ maxHeight: "140px", objectFit: "contain" }}
                     className="rounded-3 mb-3 mx-auto"
                     onError={(e) => {
-                      e.currentTarget.src = "/assets/games/SPRIBE/AVIATOR.png";
+                      e.currentTarget.src = "/assets/games/placeholder.png";
                     }}
                   />
                   <h3 className="text-warning fw-bold text-uppercase mb-1">{game?.title}</h3>
@@ -575,12 +618,12 @@ export const GamePlayPage: React.FC = () => {
               {/* Game Avatar & Title */}
               <div className="mb-3">
                 <img
-                  src={game?.image || "/assets/games/SPRIBE/AVIATOR.png"}
+                  src={game?.image || "/assets/games/placeholder.png"}
                   alt={game?.title}
                   style={{ maxHeight: "130px", objectFit: "contain", filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.7))" }}
                   className="rounded-3"
                   onError={(e) => {
-                    e.currentTarget.src = "/assets/games/avi.png";
+                    e.currentTarget.src = "/assets/games/placeholder.png";
                   }}
                 />
                 <h3 className="fw-bold text-warning mt-2 mb-1 text-uppercase">{game?.title}</h3>

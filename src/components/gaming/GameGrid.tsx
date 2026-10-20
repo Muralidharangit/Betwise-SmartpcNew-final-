@@ -113,8 +113,8 @@ export const GameGrid: React.FC<GameGridProps> = ({
         if (prov.includes("spribe") || item.category === "spribe") {
           if (n.includes("pilot")) return "/assets/games/SPRIBE/PILOT.png";
           if (n.includes("balloon") || n.includes("ballon")) return "/assets/games/SPRIBE/BALLON.png";
-          if (n.includes("dice") || n.includes("odd") || n.includes("even")) return "/assets/games/SPRIBE/DICE.png";
-          if (n.includes("hi-lo") || n.includes("hilo") || n.includes("hi lo") || n.includes("card")) return "/assets/games/SPRIBE/HILO.png";
+          if (n.includes("dice")) return "/assets/games/SPRIBE/DICE.png";
+          if (n.includes("hi-lo") || n.includes("hilo") || n.includes("hi lo")) return "/assets/games/SPRIBE/HILO.png";
           if (n.includes("hotline")) return "/assets/games/SPRIBE/HOTLINE.png";
           if (n.includes("keno80") || n.includes("keno 80") || (n.includes("keno") && n.includes("80"))) return "/assets/games/SPRIBE/KENO80.png";
           if (n.includes("keno")) return "/assets/games/SPRIBE/KENO.png";
@@ -127,8 +127,12 @@ export const GameGrid: React.FC<GameGridProps> = ({
         }
 
         // If provider returned a live image URL, use it as primary
-        if (item.image && item.image.trim() !== "") return item.image.trim();
-        if (item.provider_image && item.provider_image.trim() !== "") return item.provider_image.trim();
+        if (item.image && typeof item.image === "string" && item.image.trim() !== "") {
+          return item.image.trim();
+        }
+        if (item.provider_image && typeof item.provider_image === "string" && item.provider_image.trim() !== "") {
+          return item.provider_image.trim();
+        }
 
         // Exact Spribe flagship game names fallback
         if (n === "aviator") return "/assets/games/SPRIBE/AVIATOR.png";
@@ -137,21 +141,20 @@ export const GameGrid: React.FC<GameGridProps> = ({
         if (n === "dice") return "/assets/games/SPRIBE/DICE.png";
         if (n === "balloon" || n === "ballon") return "/assets/games/SPRIBE/BALLON.png";
 
-        // General default local placeholder - dynamic rotation of vibrant casino game artworks
-        const localCovers = [
-          "/assets/games/1.png",
-          "/assets/games/2.png",
-          "/assets/games/3.png",
-          "/assets/games/4.png",
-          "/assets/games/5.png",
-          "/assets/games/6.png",
-        ];
-        const charCode = (item.name || "game")
-          .split("")
-          .reduce((acc, c) => acc + c.charCodeAt(0), 0);
-        return localCovers[charCode % localCovers.length];
+        // If image is not coming correctly, use placeholder.png
+        return "/assets/games/placeholder.png";
       })(),
-      actionText: "PLAY NOW",
+      actionText: (() => {
+        const n = item.name.toLowerCase();
+        if (n.includes("aviator") || n.includes("pilot")) return "FLY NOW";
+        if (n.includes("balloon")) return "INFLATE NOW";
+        if (n.includes("dice") || n.includes("odd") || n.includes("even")) return "ROLL NOW";
+        if (n.includes("goal") || n.includes("kick") || n.includes("soccer")) return "KICK NOW";
+        if (n.includes("plinko")) return "DROP NOW";
+        if (n.includes("roulette") || n.includes("wheel")) return "SPIN NOW";
+        if (n.includes("trader") || n.includes("trade")) return "TRADE NOW";
+        return "PLAY NOW";
+      })(),
       kind: item.kind || "provider",
       provider: item.provider || "Game Provider",
       uuid: item.uuid || String(item.id),
@@ -206,8 +209,12 @@ export const GameGrid: React.FC<GameGridProps> = ({
       .getGamesPage(undefined, 1, 50)
       .then((res) => {
         if (isMounted && res.games && Array.isArray(res.games)) {
-          const mapped = res.games.map((item, idx) => mapApiGame(item, idx));
-          setPopularGames(mapped.length > 10 ? mapped.slice(10, 25) : mapped);
+          const liveOnly = res.games.filter(
+            (g) => g.kind !== "local" && g.provider?.toLowerCase() !== "dummygame"
+          );
+          const mapped = liveOnly.map((item, idx) => mapApiGame(item, idx));
+          // Provide all live games (reversed order so it presents high-action games differently from Featured)
+          setPopularGames(mapped.length > 5 ? [...mapped].reverse() : mapped);
         }
       })
       .catch((err) => console.warn("Failed to load popular games:", err));
@@ -217,8 +224,13 @@ export const GameGrid: React.FC<GameGridProps> = ({
       .getGamesPage("Spribe", 1, 50)
       .then((res) => {
         if (isMounted && res.games && Array.isArray(res.games)) {
-          // Filter out 'mobile' variants so we get unique Spribe games
-          const uniqueSpribeGames = res.games.filter(game => !game.name.toLowerCase().includes('mobile'));
+          // Filter out 'mobile' variants & local games so we get unique Spribe games
+          const uniqueSpribeGames = res.games.filter(
+            (game) =>
+              !game.name.toLowerCase().includes("mobile") &&
+              game.kind !== "local" &&
+              game.provider?.toLowerCase() !== "dummygame"
+          );
           
           const mapped = uniqueSpribeGames.map((item, idx) => mapApiGame(item, idx));
           setFeaturedSpribeGames(mapped.slice(0, 13));
@@ -245,12 +257,17 @@ export const GameGrid: React.FC<GameGridProps> = ({
       .then((res) => {
         if (isMounted) {
           if (res.games && Array.isArray(res.games) && res.games.length > 0) {
-            // Filter out 'mobile' duplicate games from catalog view
-            const filteredGames = res.games.filter(g => !g.name.toLowerCase().includes('mobile'));
+            // Filter out 'mobile' duplicate games and local dummy games from catalog view
+            const filteredGames = res.games.filter(
+              (g) =>
+                !g.name.toLowerCase().includes("mobile") &&
+                g.kind !== "local" &&
+                g.provider?.toLowerCase() !== "dummygame"
+            );
             const mapped = filteredGames.map((item, idx) => mapApiGame(item, idx));
             setCatalogGames(mapped);
             setHasMore(res.hasMore);
-            setTotalGames(res.total);
+            setTotalGames(mapped.length);
           } else {
             setCatalogGames([]);
             setHasMore(false);
@@ -284,12 +301,17 @@ export const GameGrid: React.FC<GameGridProps> = ({
     try {
       const res = await api.getGamesPage(providerQuery, nextPage, 50);
       if (res.games && Array.isArray(res.games) && res.games.length > 0) {
-        const filteredGames = res.games.filter(g => !g.name.toLowerCase().includes('mobile'));
+        const filteredGames = res.games.filter(
+          (g) =>
+            !g.name.toLowerCase().includes("mobile") &&
+            g.kind !== "local" &&
+            g.provider?.toLowerCase() !== "dummygame"
+        );
         const mapped = filteredGames.map((item, idx) => mapApiGame(item, catalogGames.length + idx));
         setCatalogGames((prev) => [...prev, ...mapped]);
         setCurrentPage(nextPage);
         setHasMore(res.hasMore);
-        setTotalGames(res.total);
+        setTotalGames((prev) => Math.max(prev, catalogGames.length + mapped.length));
       } else {
         setHasMore(false);
       }
@@ -328,6 +350,11 @@ export const GameGrid: React.FC<GameGridProps> = ({
 
   const filteredGames = useMemo(() => {
     return catalogGames.filter((game) => {
+      // Exclude local dummy betting games
+      if (game.kind === "local" || game.provider?.toLowerCase() === "dummygame") {
+        return false;
+      }
+
       // Platform Filter: Laptop/Desktop view shows desktop games, Mobile shows mobile games
       const isMobileGame =
         game.name.toLowerCase().includes("mobile") ||
@@ -709,13 +736,13 @@ export const GameGrid: React.FC<GameGridProps> = ({
               }}
               freeMode={true}
               slidesPerView={2}
-              spaceBetween={14}
+              spaceBetween={12}
               breakpoints={{
-                480: { slidesPerView: 2, spaceBetween: 14 },
-                576: { slidesPerView: 3, spaceBetween: 14 },
-                768: { slidesPerView: 4, spaceBetween: 14 },
-                992: { slidesPerView: 5, spaceBetween: 16 },
-                1200: { slidesPerView: 7, spaceBetween: 16 },
+                480: { slidesPerView: 2, spaceBetween: 10 },
+                576: { slidesPerView: 3, spaceBetween: 10 },
+                768: { slidesPerView: 4, spaceBetween: 12 },
+                992: { slidesPerView: 6, spaceBetween: 12 },
+                1200: { slidesPerView: 9, spaceBetween: 12 },
               }}
               className="casino-swiper-slider"
             >
@@ -771,13 +798,13 @@ export const GameGrid: React.FC<GameGridProps> = ({
               }}
               freeMode={true}
               slidesPerView={2}
-              spaceBetween={14}
+              spaceBetween={12}
               breakpoints={{
-                480: { slidesPerView: 2, spaceBetween: 14 },
-                576: { slidesPerView: 3, spaceBetween: 14 },
-                768: { slidesPerView: 4, spaceBetween: 14 },
-                992: { slidesPerView: 5, spaceBetween: 16 },
-                1200: { slidesPerView: 7, spaceBetween: 16 },
+                480: { slidesPerView: 2, spaceBetween: 10 },
+                576: { slidesPerView: 3, spaceBetween: 10 },
+                768: { slidesPerView: 4, spaceBetween: 12 },
+                992: { slidesPerView: 6, spaceBetween: 12 },
+                1200: { slidesPerView: 9, spaceBetween: 12 },
               }}
               className="casino-swiper-slider"
             >
